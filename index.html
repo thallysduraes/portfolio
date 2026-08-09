@@ -24,6 +24,20 @@
       <a href="#portfolio">Portfólio</a>
       <a href="#contato" class="nav__cta">Contato</a>
     </nav>
+    <div class="lang-switch" id="langSwitch" role="group" aria-label="Idioma / Language / Idioma">
+      <button type="button" class="lang-switch__btn is-active" data-lang="pt" title="Português" aria-label="Português">
+        <svg viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#da291c"/><rect width="12" height="20" fill="#046a38"/><circle cx="12" cy="10" r="4.2" fill="#ffe000" stroke="#fff" stroke-width="0.7"/></svg>
+        <span>PT</span>
+      </button>
+      <button type="button" class="lang-switch__btn" data-lang="en" title="English" aria-label="English">
+        <svg viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#012169"/><path d="M0,0 30,20 M30,0 0,20" stroke="#fff" stroke-width="4"/><path d="M0,0 30,20 M30,0 0,20" stroke="#c8102e" stroke-width="2"/><path d="M15,0 V20 M0,10 H30" stroke="#fff" stroke-width="6.5"/><path d="M15,0 V20 M0,10 H30" stroke="#c8102e" stroke-width="4"/></svg>
+        <span>EN</span>
+      </button>
+      <button type="button" class="lang-switch__btn" data-lang="es" title="Español" aria-label="Español">
+        <svg viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#c60b1e"/><rect y="5" width="30" height="10" fill="#ffc400"/></svg>
+        <span>ES</span>
+      </button>
+    </div>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -460,7 +474,7 @@
       </div>
       <p class="contact-note">Após o contato via e-mail, envie também o seu número de WhatsApp — assim entro em contato para marcarmos uma reunião.</p>
 
-      <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+      <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
         <input type="hidden" name="access_key" value="df993da6-389e-4e42-a46c-c131dad75cc7">
         <input type="hidden" name="subject" value="Novo pedido de contato pelo site">
         <input type="hidden" name="from_name" value="Site — Christian Durães">
@@ -471,8 +485,9 @@
 
         <div class="contact-form__row">
           <div class="contact-form__field">
-            <label for="cfNome">Nome</label>
-            <input type="text" id="cfNome" name="nome" required autocomplete="name" placeholder="O seu nome">
+            <label for="cfNome">Nome completo</label>
+            <input type="text" id="cfNome" name="nome" required autocomplete="name" placeholder="Seu nome completo">
+            <p class="contact-form__error" data-error-for="cfNome"></p>
           </div>
           <div class="contact-form__field">
             <label for="cfTelefone">Telefone / WhatsApp</label>
@@ -496,19 +511,22 @@
                 <option value="+1" data-placeholder="(555) 123-4567">EUA / Canadá (+1)</option>
                 <option value="" data-placeholder="+00 000 000 000">Outro país</option>
               </select>
-              <input type="tel" id="cfTelefone" name="telefone" required autocomplete="tel" placeholder="912 345 678">
+              <input type="tel" id="cfTelefone" name="telefone" required autocomplete="tel" inputmode="tel" placeholder="912 345 678">
             </div>
+            <p class="contact-form__error" data-error-for="cfTelefone"></p>
           </div>
         </div>
 
         <div class="contact-form__field">
           <label for="cfEmail">E-mail</label>
           <input type="email" id="cfEmail" name="email" required autocomplete="email" placeholder="o.seu@email.com">
+          <p class="contact-form__error" data-error-for="cfEmail"></p>
         </div>
 
         <div class="contact-form__field">
           <label for="cfServico">Que serviço procura?</label>
           <textarea id="cfServico" name="servico" rows="5" required placeholder="Descreva o tipo de serviço que procura — projeto estrutural, hidráulico, elétrico, orçamento, fiscalização, direção de obra, consultoria BIM…"></textarea>
+          <p class="contact-form__error" data-error-for="cfServico"></p>
         </div>
 
         <button type="submit" class="btn btn--primary contact-form__submit">Enviar pedido</button>
@@ -527,6 +545,7 @@
   </div>
 </footer>
 
+<script src="translations.js"></script>
 <script src="script.min.js"></script>
 </body>
 </html>
