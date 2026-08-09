@@ -31,6 +31,13 @@ document.querySelectorAll('.gallery__item img, .hero__photo-frame img').forEach(
 
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
+const indicativo = document.getElementById('cfIndicativo');
+const telefone = document.getElementById('cfTelefone');
+
+indicativo.addEventListener('change', () => {
+  const option = indicativo.selectedOptions[0];
+  telefone.placeholder = option.dataset.placeholder || '';
+});
 
 contactForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -42,11 +49,15 @@ contactForm.addEventListener('submit', async (e) => {
   formStatus.className = 'contact-form__status';
   formStatus.textContent = '';
 
+  const payload = new FormData(contactForm);
+  payload.set('telefone', `${indicativo.value} ${telefone.value}`.trim());
+  payload.delete('indicativo');
+
   try {
     const response = await fetch(contactForm.action, {
       method: 'POST',
       headers: { Accept: 'application/json' },
-      body: new FormData(contactForm),
+      body: payload,
     });
     const result = await response.json();
 

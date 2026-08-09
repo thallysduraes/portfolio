@@ -461,7 +461,7 @@
       <p class="contact-note">Após o contato via e-mail, envie também o seu número de WhatsApp — assim entro em contato para marcarmos uma reunião.</p>
 
       <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="COLOQUE_AQUI_A_SUA_ACCESS_KEY">
+        <input type="hidden" name="access_key" value="df993da6-389e-4e42-a46c-c131dad75cc7">
         <input type="hidden" name="subject" value="Novo pedido de contato pelo site">
         <input type="hidden" name="from_name" value="Site — Christian Durães">
         <input type="checkbox" name="botcheck" class="contact-form__botcheck" tabindex="-1" autocomplete="off">
@@ -476,7 +476,28 @@
           </div>
           <div class="contact-form__field">
             <label for="cfTelefone">Telefone / WhatsApp</label>
-            <input type="tel" id="cfTelefone" name="telefone" required autocomplete="tel" placeholder="+351 900 000 000">
+            <div class="contact-form__phone">
+              <select id="cfIndicativo" name="indicativo" aria-label="Indicativo do país">
+                <option value="+351" data-placeholder="912 345 678" selected>Portugal (+351)</option>
+                <option value="+55" data-placeholder="(11) 91234-5678">Brasil (+55)</option>
+                <option value="+34" data-placeholder="612 345 678">Espanha (+34)</option>
+                <option value="+33" data-placeholder="6 12 34 56 78">França (+33)</option>
+                <option value="+44" data-placeholder="7400 123456">Reino Unido (+44)</option>
+                <option value="+49" data-placeholder="1512 3456789">Alemanha (+49)</option>
+                <option value="+39" data-placeholder="312 345 6789">Itália (+39)</option>
+                <option value="+41" data-placeholder="78 123 45 67">Suíça (+41)</option>
+                <option value="+32" data-placeholder="470 12 34 56">Bélgica (+32)</option>
+                <option value="+31" data-placeholder="6 12345678">Países Baixos (+31)</option>
+                <option value="+352" data-placeholder="621 123 456">Luxemburgo (+352)</option>
+                <option value="+353" data-placeholder="85 123 4567">Irlanda (+353)</option>
+                <option value="+43" data-placeholder="664 123456">Áustria (+43)</option>
+                <option value="+244" data-placeholder="923 123 456">Angola (+244)</option>
+                <option value="+258" data-placeholder="82 123 4567">Moçambique (+258)</option>
+                <option value="+1" data-placeholder="(555) 123-4567">EUA / Canadá (+1)</option>
+                <option value="" data-placeholder="+00 000 000 000">Outro país</option>
+              </select>
+              <input type="tel" id="cfTelefone" name="telefone" required autocomplete="tel" placeholder="912 345 678">
+            </div>
           </div>
         </div>
 
