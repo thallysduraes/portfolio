@@ -29,3 +29,40 @@ document.querySelectorAll('.gallery__item img, .hero__photo-frame img').forEach(
   img.addEventListener('dragstart', (e) => e.preventDefault());
 });
 
+const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
+
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submit = contactForm.querySelector('.contact-form__submit');
+  const originalLabel = submit.textContent;
+
+  submit.disabled = true;
+  submit.textContent = 'A enviar…';
+  formStatus.className = 'contact-form__status';
+  formStatus.textContent = '';
+
+  try {
+    const response = await fetch(contactForm.action, {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: new FormData(contactForm),
+    });
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      contactForm.reset();
+      formStatus.className = 'contact-form__status is-success';
+      formStatus.textContent = 'Pedido enviado com sucesso. Entrarei em contato em breve.';
+    } else {
+      throw new Error(result.message || 'Falha no envio');
+    }
+  } catch (err) {
+    formStatus.className = 'contact-form__status is-error';
+    formStatus.textContent = 'Não foi possível enviar o pedido. Tente novamente ou escreva para tchris.eng@gmail.com.';
+  } finally {
+    submit.disabled = false;
+    submit.textContent = originalLabel;
+  }
+});
+

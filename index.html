@@ -459,6 +459,41 @@
         </div>
       </div>
       <p class="contact-note">Após o contato via e-mail, envie também o seu número de WhatsApp — assim entro em contato para marcarmos uma reunião.</p>
+
+      <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="COLOQUE_AQUI_A_SUA_ACCESS_KEY">
+        <input type="hidden" name="subject" value="Novo pedido de contato pelo site">
+        <input type="hidden" name="from_name" value="Site — Christian Durães">
+        <input type="checkbox" name="botcheck" class="contact-form__botcheck" tabindex="-1" autocomplete="off">
+
+        <h3 class="contact-form__title">Solicite um orçamento</h3>
+        <p class="contact-form__intro">Preencha os dados abaixo e entrarei em contato assim que possível.</p>
+
+        <div class="contact-form__row">
+          <div class="contact-form__field">
+            <label for="cfNome">Nome</label>
+            <input type="text" id="cfNome" name="nome" required autocomplete="name" placeholder="O seu nome">
+          </div>
+          <div class="contact-form__field">
+            <label for="cfTelefone">Telefone / WhatsApp</label>
+            <input type="tel" id="cfTelefone" name="telefone" required autocomplete="tel" placeholder="+351 900 000 000">
+          </div>
+        </div>
+
+        <div class="contact-form__field">
+          <label for="cfEmail">E-mail</label>
+          <input type="email" id="cfEmail" name="email" required autocomplete="email" placeholder="o.seu@email.com">
+        </div>
+
+        <div class="contact-form__field">
+          <label for="cfServico">Que serviço procura?</label>
+          <textarea id="cfServico" name="servico" rows="5" required placeholder="Descreva o tipo de serviço que procura — projeto estrutural, hidráulico, elétrico, orçamento, fiscalização, direção de obra, consultoria BIM…"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary contact-form__submit">Enviar pedido</button>
+        <p class="contact-form__privacy">Os seus dados serão utilizados apenas para responder a este pedido de contato e não serão partilhados com terceiros.</p>
+        <p class="contact-form__status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </section>
 
