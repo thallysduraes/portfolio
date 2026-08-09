@@ -580,3 +580,16 @@ p { margin: 0 0 1em; color: var(--gray-700); }
   .project-item__header { font-size: 0.95rem; padding: 16px 18px; }
 }
 
+/* Neutraliza a auto-deteccao de datas/telefones do iOS Safari */
+a[x-apple-data-detectors],
+a[href^="tel"],
+a[href^="sms"] {
+  color: inherit !important;
+  text-decoration: none !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  pointer-events: none;
+}
+
