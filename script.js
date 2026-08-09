@@ -152,6 +152,97 @@ const PHONE_DIGITS = {
   '+1': [10, 10],
 };
 
+// Máscaras por indicativo; '#' representa um dígito. Listas em ordem
+// crescente cobrem países com números de comprimento variável.
+const PHONE_MASKS = {
+  '+351': ['### ### ###'],
+  '+55': ['(##) ####-####', '(##) #####-####'],
+  '+34': ['### ### ###'],
+  '+33': ['# ## ## ## ##'],
+  '+44': ['#### ######'],
+  '+49': ['### #######', '### ########'],
+  '+39': ['### ### ###', '### ### ####'],
+  '+41': ['## ### ## ##'],
+  '+32': ['### ## ## ##'],
+  '+31': ['# ## ## ## ##'],
+  '+352': ['### ### ###'],
+  '+353': ['## ### ####'],
+  '+43': ['### #######', '### ########', '### #########', '### ##########'],
+  '+244': ['### ### ###'],
+  '+258': ['## ### ####'],
+  '+1': ['(###) ###-####'],
+};
+
+function countDigitSlots(mask) {
+  return (mask.match(/#/g) || []).length;
+}
+
+function pickMask(digits, masks) {
+  return masks.find((m) => countDigitSlots(m) >= digits.length) || masks[masks.length - 1];
+}
+
+function maskDigits(digits, masks) {
+  const mask = pickMask(digits, masks);
+  let out = '';
+  let di = 0;
+  for (let i = 0; i < mask.length; i += 1) {
+    const ch = mask[i];
+    if (ch === '#') {
+      if (di >= digits.length) break;
+      out += digits[di];
+      di += 1;
+    } else {
+      if (di >= digits.length) break;
+      out += ch;
+    }
+  }
+  // Fecha os separadores que vêm logo a seguir ao último dígito, para que
+  // "11" apareça já como "(11) " no formato brasileiro.
+  if (di === digits.length && digits.length) {
+    let consumed = 0;
+    for (let i = 0; i < mask.length; i += 1) {
+      if (mask[i] === '#') consumed += 1;
+      if (consumed === digits.length) {
+        for (let j = i + 1; j < mask.length && mask[j] !== '#'; j += 1) out += mask[j];
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+function formatPhoneInput() {
+  const masks = PHONE_MASKS[indicativo.value];
+  if (!masks) return;
+
+  const raw = telefone.value;
+  const cursor = telefone.selectionStart;
+  const digitsBeforeCursor = raw.slice(0, cursor).replace(/\D/g, '').length;
+  const maxDigits = Math.max(...masks.map(countDigitSlots));
+  const digits = raw.replace(/\D/g, '').slice(0, maxDigits);
+  const formatted = maskDigits(digits, masks);
+
+  if (formatted === raw) return;
+  telefone.value = formatted;
+
+  let pos = formatted.length;
+  if (digitsBeforeCursor === 0) {
+    pos = 0;
+  } else {
+    let seen = 0;
+    for (let i = 0; i < formatted.length; i += 1) {
+      if (/\d/.test(formatted[i])) {
+        seen += 1;
+        if (seen === digitsBeforeCursor) {
+          pos = i + 1;
+          break;
+        }
+      }
+    }
+  }
+  telefone.setSelectionRange(pos, pos);
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
 
 function setError(field, messageKey) {
@@ -171,7 +262,7 @@ function setError(field, messageKey) {
 }
 
 const ERR_PT = {
-  '@err:nome': 'Escreva o seu nome completo (nome e apelido).',
+  '@err:nome': 'Escreva o seu nome completo (nome e sobrenome/apelido).',
   '@err:telefone': 'Introduza um número de telefone válido para o país selecionado.',
   '@err:email': 'Introduza um e-mail válido, por exemplo nome@dominio.com.',
   '@err:servico': 'Descreva brevemente o serviço que procura.',
@@ -210,9 +301,12 @@ function validateServico() {
   });
 });
 
+telefone.addEventListener('input', formatPhoneInput);
+
 indicativo.addEventListener('change', () => {
   const option = indicativo.selectedOptions[0];
   telefone.placeholder = option.dataset.placeholder || '';
+  formatPhoneInput();
   if (telefone.classList.contains('has-error')) validateTelefone();
 });
 
