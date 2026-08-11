@@ -698,25 +698,82 @@ p { margin: 0 0 1em; color: var(--gray-700); }
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px 24px;
+  gap: 20px;
+  padding: 16px 24px;
   background: var(--white);
   border: none;
   cursor: pointer;
   text-align: left;
   font-family: var(--font);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--blue-900);
   transition: background 0.15s;
 }
 .project-item__header:hover { background: var(--blue-100); }
+.project-item__header:hover .project-item__preview-img--front {
+  transform: translateY(-2px);
+}
+
+.project-item__preview {
+  position: relative;
+  flex: none;
+  width: 92px;
+  height: 72px;
+}
+.project-item__preview-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 84px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--white);
+  box-shadow: 0 4px 10px -4px rgba(11, 27, 48, 0.35);
+  transition: transform 0.2s;
+}
+.project-item__preview-img--front {
+  position: relative;
+  z-index: 3;
+}
+.project-item__preview-img--mid {
+  z-index: 2;
+  top: 6px;
+  left: 8px;
+  filter: blur(1.5px) saturate(0.7) brightness(0.94);
+  opacity: 0.85;
+}
+.project-item__preview-img--back {
+  z-index: 1;
+  top: 12px;
+  left: 16px;
+  filter: blur(2.5px) saturate(0.6) brightness(0.88);
+  opacity: 0.65;
+}
+
+.project-item__info {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.project-item__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--blue-900);
+}
 .project-item__header em {
   font-style: normal;
   font-weight: 500;
   color: var(--gray-500);
   font-size: 0.9rem;
+}
+.project-item__cta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--blue-600);
 }
 .project-item__chevron {
   flex: none;
@@ -750,7 +807,11 @@ p { margin: 0 0 1em; color: var(--gray-700); }
 }
 @media (max-width: 720px) {
   .project-item__body .gallery--cad { grid-template-columns: 1fr; }
-  .project-item__header { font-size: 0.95rem; padding: 16px 18px; }
+  .project-item__header { padding: 14px 16px; gap: 14px; }
+  .project-item__preview { width: 72px; height: 58px; }
+  .project-item__preview-img { width: 64px; height: 50px; }
+  .project-item__title { font-size: 0.95rem; }
+  .project-item__cta { font-size: 0.78rem; }
 }
 
 /* Neutraliza a auto-deteccao de datas/telefones do iOS Safari */
